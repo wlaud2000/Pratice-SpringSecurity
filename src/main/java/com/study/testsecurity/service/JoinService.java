@@ -16,8 +16,11 @@ public class JoinService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public void joinProcess(JoinDTO joinDTO){
 
-        //DB에 이미 동일한 username을 가진 회원이 존재하는지 검증해야함
-
+        //DB에 이미 동일한 username을 가진 회원이 존재하는지 검증
+        boolean isUser = userRepository.existsByUsername(joinDTO.getUsername());
+        if(isUser) {
+            return ; //참이라면(존재한다면) 회원가입 로직을 진행하지 않고 함수를 리턴
+        }
 
         //앞단에서 받은 DTO의 userdata를 Entity로 변환
         UserEntity data = new UserEntity(); //빈 객체 생성

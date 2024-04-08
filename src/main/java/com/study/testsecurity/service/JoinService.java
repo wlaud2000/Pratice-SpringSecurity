@@ -26,7 +26,7 @@ public class JoinService {
         UserEntity data = new UserEntity(); //빈 객체 생성
         data.setUsername(joinDTO.getUsername());
         data.setPassword(bCryptPasswordEncoder.encode(joinDTO.getPassword())); //비밀번호는 암호화시켜서 DB에 넣어줘야 함.
-        data.setRole("ROLE_USER"); //회원 자신이 특정한  Role값을 설정할 수 없기때문에 Service단에서 일시적으로 강제로 넣어줌
+        data.setRole("ROLE_ADMIN"); //회원 자신이 특정한  Role값을 설정할 수 없기때문에 Service단에서 일시적으로 강제로 넣어줌
 
 
         userRepository.save(data); //DB에 data를 insert할 수 있는 save 메소드

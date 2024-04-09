@@ -37,6 +37,16 @@ public class SecurityConfig {
                                                 //csrf설정이 동작되면 post요청을 보낼 때 csrf 토큰도 보내줘야 login이 진행된다.
                                                 //근데 csrf를 켜놓으면 개발 환경에서 토큰을 보내지 않으면 login이 진행되지 않기 때문에 잠시 disable시켜줌.
 
+        http
+                .sessionManagement((auth) -> auth
+                        .maximumSessions(1) //하나의 아이디에 대한 다중 로그인 허용 개수, 만약 3이면 로그인이 유지된 상태로 최대 3개까지 로그인 진행 가능
+                        .maxSessionsPreventsLogin(true)); //다중 로그인 개수를 초과하였을 경우 처리 방법
+                                                          //true : 새로운 로그인 차단 false : 기존 로그인 세션 삭제
+
+        http
+                .sessionManagement((auth) -> auth
+                        .sessionFixation().changeSessionId()); //로그인 시 동일한 세션에 대한 id 변경
+
         return http.build();
     }
 }
